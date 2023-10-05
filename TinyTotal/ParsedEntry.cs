@@ -1,11 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SumMeUp
+namespace TinyTotal
 {
     public class ParsedEntry : ObservableObject
     {
@@ -57,7 +58,7 @@ namespace SumMeUp
                 }
                 catch (Exception e)
                 {
-                    // TODO need a logging framework
+                    Logging.Instance.Log(e);
                 }
             }
             ParsedAsNumber = successfulParsing;

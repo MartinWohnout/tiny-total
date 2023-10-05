@@ -8,9 +8,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TinyTotal;
 using WpfUtilities;
 
-namespace SumMeUp
+namespace TinyTotal
 {
     public class MainTableViewModel : ObservableObject
     {
@@ -22,8 +23,11 @@ namespace SumMeUp
 
             Random rnd = new Random();
             AddContentCommand = new RelayCommand(() =>
-                DataColumn.Add(new ParsedEntry(rnd.NextDouble().ToString()))
-            );
+            {
+                var newEntry = new ParsedEntry(rnd.NextDouble().ToString());
+                DataColumn.Add(newEntry);
+                Logging.Instance.LogDebug($"Added new entry: {newEntry.DisplayValue}");
+            });
         }
 
         public ICommand AddContentCommand { get; init; }

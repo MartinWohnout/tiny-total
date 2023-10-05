@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace SumMeUp
+namespace TinyTotal
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -14,4 +14,5 @@ namespace SumMeUp
     public partial class App : Application
     {
     }
+
 }
