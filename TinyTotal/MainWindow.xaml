@@ -12,34 +12,48 @@
         <converters:BoolToVisibilityConverter x:Key="InvertedBoolToVisibilityConverter" Inverted="True"/>
     </Window.Resources>
     <Grid>
+        <!-- Simulate padding via empty rows/cols-->
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="4" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="4" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="4" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+        <Grid Grid.Row="1" Grid.Column="1"
             Visibility="{Binding HasContent, Mode=OneWay, Converter={StaticResource InvertedBoolToVisibilityConverter}}">
             <Rectangle Height="Auto" Width="Auto">
             </Rectangle>
         </Grid>
-        <DataGrid Grid.Row="0" Grid.RowSpan="2" Grid.Column="0"
+        <!-- TODO: Fix horrid columns -->
+        <!-- TODO: Highlight entries that don't contribute to the total -->
+        <DataGrid Grid.Row="1" Grid.Column="1"
             x:Name="mainContentDisplay"
             Visibility="{Binding HasContent, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
             ItemsSource="{Binding DataColumn}">
         </DataGrid>
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
+        <StackPanel Grid.Row="2" Grid.Column="1" Margin="0,4,0,0" Orientation="Horizontal">
             <TextBlock>
                 Spaltensumme:
             </TextBlock>
-            <TextBox IsReadOnly="True" IsReadOnlyCaretVisible="False" Text="{Binding ColumnTotal, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Margin="4,0,0,0" IsReadOnly="True" IsReadOnlyCaretVisible="False" Text="{Binding ColumnTotal, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="1">
-            <Button Command="{Binding AddContentCommand, Mode=OneTime}">
-                Eintrag hinzufügen
+        <StackPanel Grid.Row="1" Grid.Column="2" Margin="2,0,0,0">
+            <StackPanel Orientation="Horizontal">
+                <!-- TODO Handle high input length -->
+                <!-- Options: Limit length, scrollbar, ? -->
+                <TextBox MinWidth="50" MaxWidth="50" Margin="2" AcceptsReturn="False" AcceptsTab="True" Text="{Binding ContentCandidate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Width="Auto" Margin="2" Command="{Binding AddContentCandidateCommand, Mode=OneTime}">
+                    Inhalt hinzufügen
+                </Button>
+            </StackPanel>
+            <Button Width="Auto" Margin="2" Command="{Binding AddRandomNumberCommand, Mode=OneTime}">
+                Zufällige Zahl hinzufügen
             </Button>
         </StackPanel>
     </Grid>

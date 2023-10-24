@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -21,17 +22,81 @@ namespace TinyTotal
             EnableDataColumnObservation();
             CalculateColumnTotal();
 
-            Random rnd = new Random();
-            AddContentCommand = new RelayCommand(() =>
+            AddContentCandidateCommand = new RelayCommand(AddContentCandidate, CanAddContentCandidate);
+            PropertyChanged += (sender, args) =>
             {
-                var newEntry = new ParsedEntry(rnd.NextDouble().ToString());
-                DataColumn.Add(newEntry);
-                Logging.Instance.LogDebug($"Added new entry: {newEntry.DisplayValue}");
-            });
+                if (string.Equals(args.PropertyName, nameof(ContentCandidate)))
+                {
+                    AddContentCandidateCommand.NotifyCanExecuteChanged();
+                }
+            };
+
+            AddRandomNumberCommand = new RelayCommand(AddRandomNumber, CanAddRandomNumber);
         }
 
-        public ICommand AddContentCommand { get; init; }
+        public IRelayCommand AddContentCandidateCommand { get; init; }
+        public IRelayCommand AddRandomNumberCommand { get; init; }
 
+
+        private void AddContentCandidate()
+        {
+            if (AddContent(ContentCandidate))
+            {
+                ContentCandidate = null;
+            }
+        }
+        private bool CanAddContentCandidate()
+        {
+            return CanAddContent(ContentCandidate);
+        }
+
+        private void AddRandomNumber()
+        {
+            AddContent(GetRandomPositiveTestDecimal().ToString());
+
+        }
+        private bool CanAddRandomNumber()
+        {
+            return true;
+        }
+
+        private bool AddContent(string content)
+        {
+            Logging.Instance.LogDebug($"Trying to add new entry: {content ?? "<null>"}");
+            var newEntry = new ParsedEntry(content);
+            try
+            {
+                DataColumn.Add(newEntry);
+            }
+            catch (Exception e)
+            {
+                Logging.Instance.Log(e, "Unable to add entry.");
+                return false;
+            }
+            Logging.Instance.LogDebug($"Added new entry: {newEntry.DisplayValue}");
+            return true;
+        }
+        private bool CanAddContent(string content)
+        {
+            return content != null;
+        }
+
+        private readonly Random RandomNumberGenerator = new Random();
+        // For testing purposes only. Please don't use this in prod.
+        private decimal GetRandomPositiveTestDecimal()
+        {
+            var upperBound = Decimal.Floor(Math.Min(Decimal.MaxValue, Int64.MaxValue));
+            decimal leftOfDot = (decimal)RandomNumberGenerator.NextInt64(0, (Int64)upperBound);
+            decimal rightOfDot = (decimal)RandomNumberGenerator.NextDouble();
+            return leftOfDot + rightOfDot;
+        }
+
+        private string m_contentCandidate;
+        public string ContentCandidate
+        {
+            get => m_contentCandidate;
+            set => SetProperty(ref m_contentCandidate, value);
+        }
 
         private bool m_hasContent;
         public bool HasContent
@@ -94,6 +159,7 @@ namespace TinyTotal
 
         private void CalculateColumnTotal()
         {
+            // TODO: Potentiellen Overflow abfangen
             ColumnTotal = DataColumn.Sum(c => c.ParsedAsNumber ? c.ParsedValue.Value : Decimal.Zero);
         }
         private void UpdateColumnTotal(IEnumerable<ParsedEntry> entries, bool entriesAdded)
