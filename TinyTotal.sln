@@ -6,11 +6,8 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfUtilities", "..\WpfUtilities\WpfUtilities.csproj", "{E5029F43-63F9-4389-8ED3-D2F3F42D1BD6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TinyTotal", "TinyTotal\TinyTotal.csproj", "{EEF0889A-8F15-4E50-8AF8-51CD9B31945B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{BE5A2223-B421-4994-93C9-894223FA0728} = {BE5A2223-B421-4994-93C9-894223FA0728}
-	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OOUtilities", "..\OOUtilities\OOUtilities.csproj", "{BE5A2223-B421-4994-93C9-894223FA0728}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TinyTotalTests", "TinyTotalTests\TinyTotalTests.csproj", "{79D6CBD8-24B4-40E5-BEFF-79EDBDE4BE2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +23,10 @@ Global
 		{EEF0889A-8F15-4E50-8AF8-51CD9B31945B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEF0889A-8F15-4E50-8AF8-51CD9B31945B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEF0889A-8F15-4E50-8AF8-51CD9B31945B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE5A2223-B421-4994-93C9-894223FA0728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE5A2223-B421-4994-93C9-894223FA0728}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE5A2223-B421-4994-93C9-894223FA0728}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE5A2223-B421-4994-93C9-894223FA0728}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79D6CBD8-24B4-40E5-BEFF-79EDBDE4BE2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79D6CBD8-24B4-40E5-BEFF-79EDBDE4BE2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79D6CBD8-24B4-40E5-BEFF-79EDBDE4BE2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79D6CBD8-24B4-40E5-BEFF-79EDBDE4BE2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
