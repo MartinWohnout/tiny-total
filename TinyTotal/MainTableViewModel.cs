@@ -7,7 +7,9 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using TinyTotal;
 using WpfUtilities;
@@ -32,10 +34,28 @@ namespace TinyTotal
             };
 
             AddRandomNumberCommand = new RelayCommand(AddRandomNumber, CanAddRandomNumber);
+            PasteCommand = new RelayCommand(PasteContent, CanPasteContent);
         }
+
+
+        private PasteFormatter m_pasteHelper;
+        private PasteFormatter PasteHelper
+        {
+            get
+            {
+                if (m_pasteHelper == null)
+                {
+                    m_pasteHelper = new PasteFormatter();
+                }
+                return m_pasteHelper;
+            }
+        }
+
 
         public IRelayCommand AddContentCandidateCommand { get; init; }
         public IRelayCommand AddRandomNumberCommand { get; init; }
+
+        public IRelayCommand PasteCommand { get; init; }
 
 
         private void AddContentCandidate()
@@ -90,6 +110,26 @@ namespace TinyTotal
             decimal rightOfDot = (decimal)RandomNumberGenerator.NextDouble();
             return leftOfDot + rightOfDot;
         }
+
+        private void PasteContent()
+        {
+            try
+            {
+                foreach (var word in PasteHelper.GetClipboardWords())
+                {
+                    AddContent(word);
+                }
+            }
+            catch (Exception e)
+            {
+                Logging.Instance.Log(e, "Unable to execute paste.");
+            }
+        }
+        private bool CanPasteContent()
+        {
+            return PasteHelper.IsPasteAvailable();
+        }
+
 
         private string m_contentCandidate;
         public string ContentCandidate
