@@ -12,7 +12,7 @@ namespace TinyTotal.UnitTests.ViewModels
             var testModel = GetTestModel();
             testModel.ContentCandidate = InitialValue.ToString();
             testModel.AddContentCandidateCommand.Execute(null);
-            Assert.IsNull(testModel.ContentCandidate);
+            Assert.That(testModel.ContentCandidate, Is.Null);
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace TinyTotal.UnitTests.ViewModels
 
             var testModel = GetTestModel();
             AddContentToModel(testModel, InitialValue.ToString());
-            Assert.AreEqual(testModel.HasContent, true);
+            Assert.That(testModel.HasContent, Is.True);
         }
 
         [Test]
@@ -32,7 +32,7 @@ namespace TinyTotal.UnitTests.ViewModels
 
             var testModel = GetTestModel();
             AddContentToModel(testModel, InitialValue.ToString());
-            Assert.AreEqual(testModel.ColumnTotal, InitialValue);
+            Assert.That(testModel.ColumnTotal, Is.EqualTo(InitialValue));
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace TinyTotal.UnitTests.ViewModels
             var testModel = GetTestModel();
             AddContentToModel(testModel, InitialValue.ToString());
             AddContentToModel(testModel, AddedValue.ToString());
-            Assert.AreEqual(testModel.ColumnTotal, GetColumnTotal());
+            Assert.That(testModel.ColumnTotal, Is.EqualTo(GetColumnTotal()));
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace TinyTotal.UnitTests.ViewModels
         {
             var testModel = GetTestModel();
             AddContentToModel(testModel, null);
-            Assert.AreEqual(testModel.HasContent, false);
+            Assert.That(testModel.HasContent, Is.False);
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace TinyTotal.UnitTests.ViewModels
         {
             var testModel = GetTestModel();
             AddContentToModel(testModel, string.Empty);
-            Assert.AreEqual(testModel.HasContent, false);
+            Assert.That(testModel.HasContent, Is.False);
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace TinyTotal.UnitTests.ViewModels
             var testModel = GetTestModel();
             AddContentToModel(testModel, DisplayText);
             var displayedLine = testModel.DataColumn.First();
-            Assert.AreEqual(displayedLine.DisplayValue, DisplayText);
+            Assert.That(displayedLine.DisplayValue, Is.EqualTo(DisplayText));
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace TinyTotal.UnitTests.ViewModels
             var testModel = GetTestModel();
             AddContentToModel(testModel, NumericValue.ToString());
             AddContentToModel(testModel, TextValue);
-            Assert.AreEqual(testModel.ColumnTotal, NumericValue);
+            Assert.That(testModel.ColumnTotal, Is.EqualTo(NumericValue));
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace TinyTotal.UnitTests.ViewModels
         {
             var testModel = GetTestModel();
             testModel.AddRandomNumberCommand.Execute(null);
-            Assert.AreEqual(testModel.HasContent, true);
+            Assert.That(testModel.HasContent, Is.True);
         }
 
         private MainTableViewModel GetTestModel()
