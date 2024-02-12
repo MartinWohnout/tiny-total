@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TinyTotal"
         xmlns:converters="clr-namespace:WpfUtilities.Converters;assembly=WpfUtilities"
         mc:Ignorable="d"
-        Title="TinyTotal!" Height="450" Width="800">
+        Title="TinyTotal" Height="450" Width="800">
     <Window.Resources>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <converters:BoolToVisibilityConverter x:Key="InvertedBoolToVisibilityConverter" Inverted="True"/>

@@ -26,7 +26,6 @@ namespace TinyTotal
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainTableViewModel();
         }
     }
 }
